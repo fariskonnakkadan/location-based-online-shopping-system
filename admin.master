@@ -1,0 +1,143 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="admin.master.cs" Inherits="admin" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Fashion Store</title>
+    <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+
+<!--
+th {
+	color: #FFFFFF;
+}
+td {
+	color: #FFFFFF;
+}
+body {
+	color: #FFFFFF;
+}
+-->
+</style>
+<title>Fashion Store</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<style type="text/css">
+<!--
+body,td,th {
+	color: #FFFFFF;
+}
+-->
+</style></head>
+<body>
+    <form id="form2" runat="server">
+<div id="mainblock">
+  <div id="innerblock">
+    <div id="toppanel">
+      <div class="tp_heading">Online Shopping</div>
+      <div class="tp_bg"> <a href="http://www.free-css.com/"><img src="images/tp_logo.jpg" width="329" height="71" alt="" class="tp_logo" /></a>
+       
+      </div>
+      <div class="fp_menutile"> <a href="ad_home.aspx" class="menu2">Home </a>&nbsp;<img src="images/tp_divider.gif" width="2" height="59" alt="" class="tp_divider" />
+       <%--<a href="Brand_Management.aspx" class="menu2">Brand</a> 
+          <img src="images/tp_divider.gif" alt="" class="tp_divider" /> 
+          <a href="Category Management.aspx" class="menu2">Category</a> <img src="images/tp_divider.gif" width="2" height="59" alt="" class="tp_divider" /> 
+          <a href="Item Registration.aspx" class="menu2">Item</a> <img src="images/tp_divider.gif" width="2" height="59" alt="" class="tp_divider" /> 
+          <a href="Product_Registration.aspx" class="menu2">Product</a> <img src="images/tp_divider.gif" width="2" height="59" alt="" class="tp_divider" /> 
+          <a href="Stock.aspx" class="menu2">Stock</a> <img src="images/tp_divider.gif" width="2" height="59" alt="" class="tp_divider" /> 
+          <a href="User Details.aspx" class="menu2">View User</a> <img src="images/tp_divider.gif" width="2" height="59" alt="" class="tp_divider" /> 
+          <a href="View Booking.aspx" class="menu2">View Booking</a> 
+          <a href="ViewRetail.aspx" class="menu1">View Retail Shop</a>&nbsp;<img src="images/tp_divider.gif" width="2" height="59" alt="" class="tp_divider" /> --%>
+          <a href="RetailLogin.aspx" class="menu2">LogOut</a> 
+    </div>
+    <div class="contentblock">
+      <div class="contentpanel">
+        <div class="cnt_headingblock">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+          </div>
+        <div padding-bottom:55px;">
+          <p>&nbsp;</p>
+          <p>&nbsp;  </p>
+        </div>
+      </div>
+      <div class="rightpanel">
+        <div class="rp_headingblock"> <img src="images/rp_btn1.gif" width="13" height="13" alt="" class="cnt_btn1" /> <img src="images/rp_heading1.gif" width="103" height="30" alt="" class="cnt_heading" /> </div>
+        <div class="rp_block1">
+          <div class="rp_listblock">
+           <%--<img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />--%>
+           <%-- <p class="rp_listtxt">--%>
+             <a href="Brand_Management.aspx" class="menu2">Brand</a> 
+           <%-- </p>--%>
+          </div>
+          <div class="rp_listblock"> 
+         <%-- <img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />--%>
+            
+            <a href="Category Management.aspx" class="menu2">Category</a>
+           
+          </div>
+          <div class="rp_listblock"> 
+          <%--<img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />--%>
+           
+             <a href="Item Registration.aspx" class="menu2">Item</a> 
+           
+          </div>
+          <div class="rp_listblock">
+           <%--<img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />--%>
+         
+          </div>
+          <div class="rp_listblock">
+           <%--<img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />--%>
+           
+            <a href="Stock.aspx" class="menu2">Stock</a>
+           
+          </div>
+          <div class="rp_listblock"> 
+            
+            <a href="User Details.aspx" class="menu2">View User</a>
+            
+          </div>
+          <div class="rp_listblock"> 
+           
+            
+             <a href="ViewRetail.aspx" class="menu2">View Retail Shop</a>
+            
+           
+          </div>
+          <%--<div class="rp_listblock">
+            <p class="rp_listtxt">Memory Card</p>
+          </div>
+          <div class="rp_listblock"> 
+            <p class="rp_listtxt">Watch</p>
+          </div>
+          <div class="rp_listblock"> <img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />
+            <p class="rp_listtxt">Dress</p>
+          </div>
+          <div class="rp_listblock"> <img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />
+            <p class="rp_listtxt">Bath Oils</p>
+          </div>
+          <div class="rp_listblock"> <img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />
+            <p class="rp_listtxt">Bath Sets &amp; Kits</p>
+          </div>
+          <div class="rp_listblock"> <img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />
+            <p class="rp_listtxt">Body Lotions</p>
+          </div>
+          <div class="rp_listblock"> <img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />
+            <p class="rp_listtxt">Body Powders</p>
+          </div>
+          <div class="rp_listblock"> <img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />
+            <p class="rp_listtxt">Body Scrubs</p>
+          </div>
+          <div class="rp_listblock" style="padding-bottom:20px;"> <img src="images/rp_btn2.gif" width="8" height="8" alt="" class="rp_btn3" />
+            <p class="rp_listtxt">Body Sprays &amp; Mists</p>
+          </div>--%>
+        </div>
+        </div>
+    </div>
+  </div>
+</div>
+    </form>
+</body>
+</html>

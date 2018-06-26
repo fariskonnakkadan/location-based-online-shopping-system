@@ -1,0 +1,247 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+
+public partial class Stock_Updatation_Retail : System.Web.UI.Page
+{
+    string qry;
+    float qua;
+    Class1 c = new Class1();
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            qry = "select Category_Id,Cat_name from Category";
+            DataTable dt2 = c.ret(qry);
+            DropDownList4.DataSource = dt2;
+            DropDownList4.DataTextField = "Cat_name";
+            DropDownList4.DataValueField = "Category_Id";
+            DropDownList4.DataBind();
+            DropDownList4.Items.Insert(0, new ListItem("--Select--", "-1"));
+
+            qry = "select Category_Id,Cat_name from Category";
+            dt2 = c.ret(qry);
+            DropDownList1.DataSource = dt2;
+            DropDownList1.DataTextField = "Cat_name";
+            DropDownList1.DataValueField = "Category_Id";
+            DropDownList1.DataBind();
+
+           
+           
+
+
+            MultiView1.SetActiveView(View1);
+        }
+    }
+    protected void DropDownList4_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        qry = "select Brand_Id, Name from Brand where Category_Id=" + DropDownList4.Text + "";
+        DataTable dt3 = c.ret(qry);
+        DropDownList5.DataSource = dt3;
+        DropDownList5.DataTextField = "Name";
+        DropDownList5.DataValueField = "Brand_Id";
+        DropDownList5.DataBind();
+        DropDownList5.Items.Insert(0, new ListItem("--Select--", "-1"));
+    }
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        qry = "select Brand_Id, Name from Brand where Category_Id=" + DropDownList1.Text + "";
+        DataTable dt3 = c.ret(qry);
+        DropDownList2.DataSource = dt3;
+        DropDownList2.DataTextField = "Name";
+        DropDownList2.DataValueField = "Brand_Id";
+        DropDownList2.DataBind();
+        DropDownList2.Items.Insert(0, new ListItem("--Select--", "-1"));
+    
+    }
+    protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        qry = "SELECT  product_reg.Product_Id,product_reg.Product_Name FROM Brand INNER JOIN product_reg ON Brand.Brand_Id = product_reg.Brand_id INNER JOIN Category ON product_reg.Cat_id = Category.Category_Id INNER JOIN Item_Registration ON product_reg.Item_id = Item_Registration.Item_Id where  Brand.Name='" + DropDownList2.SelectedItem.Text + "' and  Category.Cat_name='" + DropDownList1.SelectedItem.Text + "' and Item_Registration.Item_Name='" + DropDownList3.SelectedItem.Text + "'";
+        DataTable dt = c.ret(qry);
+        DropDownList8.DataSource = dt;
+        DropDownList8.DataTextField = "Product_Name";
+        DropDownList8.DataValueField = "Product_Id";
+        DropDownList8.DataBind();
+        DropDownList8.Items.Insert(0, new ListItem("--Select--", "-1"));
+        DropDownList8.Visible = true;
+        Label4.Visible = true;
+    
+        
+    }
+    protected void DropDownList5_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        qry = "select Item_Id, Item_Name from Item_Registration where Category_Id=" + DropDownList4.SelectedValue + " and Brand_Id=" + DropDownList5.SelectedValue+ "";
+        DataTable dt3 = c.ret(qry);
+        DropDownList6.DataSource = dt3;
+        DropDownList6.DataTextField = "Item_Name";
+        DropDownList6.DataValueField = "Item_Id";
+        DropDownList6.DataBind();
+        DropDownList6.Items.Insert(0, new ListItem("--Select--", "-1"));
+    }
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        qry = "SELECT product_reg.Product_Id, product_reg.Product_Name, Retail_stock_manage.Quantity FROM Brand INNER JOIN product_reg ON Brand.Brand_Id = product_reg.Brand_id INNER JOIN Category ON product_reg.Cat_id = Category.Category_Id INNER JOIN Retail_stock_manage ON product_reg.Product_Id = Retail_stock_manage.Product_Id INNER JOIN Item_Registration ON product_reg.Item_id = Item_Registration.Item_Id where Category.Cat_name='" + DropDownList4.SelectedItem.Text + "' and Brand.Name='" + DropDownList5.SelectedItem.Text + "' and Item_Registration.Item_Name='" + DropDownList6.SelectedItem.Text + "' and Shop_Id=" + Session["shopid"] + "";
+            DataTable dt=c.ret(qry);
+        DataGrid2.DataSource=dt;
+        DataGrid2.DataBind();
+        DataGrid2.Visible = true;
+    }
+    protected void DataGrid2_ItemCommand(object source, DataGridCommandEventArgs e)
+    {
+
+        if (e.CommandName == "Add")
+        {
+
+            qry = "select Brand_Id, Name from Brand where Category_Id=" + DropDownList4.Text + "";
+            DataTable dt3 = c.ret(qry);
+            DropDownList2.DataSource = dt3;
+            DropDownList2.DataTextField = "Name";
+            DropDownList2.DataValueField = "Brand_Id";
+            DropDownList2.DataBind();
+
+            qry = "select Item_Id, Item_Name from Item_Registration where Category_Id=" + DropDownList4.SelectedValue + " and Brand_Id=" + DropDownList5.SelectedValue + "";
+            dt3 = c.ret(qry);
+            DropDownList3.DataSource = dt3;
+            DropDownList3.DataTextField = "Item_Name";
+            DropDownList3.DataValueField = "Item_Id";
+            DropDownList3.DataBind();
+
+            TextBox3.Text = e.Item.Cells[0].Text.ToString();
+            TextBox4.Text = e.Item.Cells[1].Text.ToString();
+            
+            DropDownList1.Text = DropDownList4.Text;
+            DropDownList2.Text = DropDownList5.Text;
+            DropDownList3.Text = DropDownList6.Text;
+            MultiView1.SetActiveView(View2);
+
+
+
+        }
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        qry = "select Quantity from product_reg where Product_Id=" + TextBox3.Text + "";
+        DataTable dt = c.ret(qry);
+        Session["quantity"]=dt.Rows[0][0].ToString();
+
+        if (Convert.ToSingle(TextBox2.Text) > Convert.ToSingle(dt.Rows[0][0]))
+        {
+            Response.Write("<script>alert('Stock insufficient')</script>");
+        }
+        else
+        {
+            qry = "select Quantity from Retail_stock_manage where Product_Id=" + TextBox3.Text + " and Shop_Id=" + Session["shopid"] + "";
+            dt = c.ret(qry);
+            if (dt.Rows.Count > 0)
+            {
+                qua = Convert.ToSingle(dt.Rows[0][0]) + Convert.ToSingle(TextBox2.Text);
+                qry = "update Retail_stock_manage set Quantity=" + qua + " where Product_Id=" + TextBox3.Text + " and Shop_Id=" + Session["shopid"] + "";
+                c.nonret(qry);
+                Response.Write("<script>alert('Stock updated')</script>");
+
+            }
+
+            else
+            {
+                qry = "insert into Retail_stock_manage values(" + Session["shopid"] + "," + TextBox3.Text + "," + TextBox2.Text + ")";
+                c.nonret(qry);
+                Response.Write("<script>alert('Stock Added')</script>");
+            }
+
+            float pdt_quant=Convert.ToSingle(Session["quantity"].ToString())-Convert.ToSingle(TextBox2.Text);
+            qry = "update product_reg set Quantity=" + pdt_quant + " where Product_Id=" + TextBox3.Text + "";
+            c.nonret(qry);
+
+            
+        }
+        DropDownList4.SelectedIndex = -1;
+        DropDownList5.SelectedIndex = -1;
+        DropDownList5.SelectedIndex = -1;
+        DropDownList7.Visible = false;
+        DataGrid2.Visible = false;
+        MultiView1.SetActiveView(View1);
+    }
+    protected void TextBox2_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+    protected void Button4_Click(object sender, EventArgs e)
+    {
+        qry = "SELECT  product_reg.Product_Id,product_reg.Product_Name FROM Brand INNER JOIN product_reg ON Brand.Brand_Id = product_reg.Brand_id INNER JOIN Category ON product_reg.Cat_id = Category.Category_Id INNER JOIN Item_Registration ON product_reg.Item_id = Item_Registration.Item_Id where  Brand.Name='" + DropDownList5.SelectedItem.Text + "' and  Category.Cat_name='" + DropDownList4.SelectedItem.Text + "' and Item_Registration.Item_Name='" + DropDownList6.SelectedItem.Text + "'";
+        DataTable dt = c.ret(qry);
+        DropDownList7.DataSource = dt;
+        DropDownList7.DataTextField = "Product_Name";
+        DropDownList7.DataValueField = "Product_Id";
+        DropDownList7.DataBind();
+        DropDownList7.Items.Insert(0, new ListItem("--Select--", "-1"));
+        DropDownList7.Visible = true;
+
+    }
+    protected void DropDownList7_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        qry = "select Category_Id,Cat_name from Category";
+        DataTable dt2 = c.ret(qry);
+        DropDownList1.DataSource = dt2;
+        DropDownList1.DataTextField = "Cat_name";
+        DropDownList1.DataValueField = "Category_Id";
+        DropDownList1.DataBind();
+        DropDownList1.Items.Insert(0, new ListItem("--Select--", "-1"));
+
+        qry = "select Brand_Id, Name from Brand where Category_Id=" + DropDownList4.Text + "";
+        DataTable dt3 = c.ret(qry);
+        DropDownList2.DataSource = dt3;
+        DropDownList2.DataTextField = "Name";
+        DropDownList2.DataValueField = "Brand_Id";
+        DropDownList2.DataBind();
+        DropDownList2.Items.Insert(0, new ListItem("--Select--", "-1"));
+        
+
+        qry = "select Item_Id, Item_Name from Item_Registration where Category_Id=" + DropDownList4.SelectedValue + " and Brand_Id=" + DropDownList5.SelectedValue + "";
+        dt3 = c.ret(qry);
+        DropDownList3.DataSource = dt3;
+        DropDownList3.DataTextField = "Item_Name";
+        DropDownList3.DataValueField = "Item_Id";
+        DropDownList3.DataBind();
+        DropDownList3.Items.Insert(0, new ListItem("--Select--", "-1"));
+
+        TextBox3.Text = DropDownList7.SelectedItem.Value;
+        TextBox4.Text = DropDownList7.SelectedItem.Text;
+        DropDownList1.SelectedIndex = -1;
+        DropDownList2.SelectedIndex = -1;
+        DropDownList3.SelectedIndex = -1;
+        TextBox2.Text = "";
+
+        //DropDownList1.SelectedItem.Value = DropDownList4.Text ;
+        //DropDownList2.SelectedItem.Value = DropDownList5.Text;
+        //DropDownList3.SelectedItem.Value = DropDownList6.Text;
+        MultiView1.SetActiveView(View2);
+    }
+    protected void DropDownList2_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        qry = "select Item_Id, Item_Name from Item_Registration where Category_Id=" + DropDownList1.SelectedValue + " and Brand_Id=" + DropDownList2.SelectedValue + "";
+        DataTable dt3 = c.ret(qry);
+        DropDownList3.DataSource = dt3;
+        DropDownList3.DataTextField = "Item_Name";
+        DropDownList3.DataValueField = "Item_Id";
+        DropDownList3.DataBind();
+        DropDownList3.Items.Insert(0, new ListItem("--Select--", "-1"));
+    }
+    protected void DropDownList8_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        TextBox3.Text = DropDownList8.SelectedItem.Value;
+        TextBox4.Text = DropDownList8.SelectedItem.Text;
+    }
+    protected void Button5_Click(object sender, EventArgs e)
+    {
+        DropDownList4.SelectedIndex = -1;
+        DropDownList5.SelectedIndex = -1;
+        DropDownList6.SelectedIndex = -1;
+        DropDownList7.Visible = false;
+        MultiView1.SetActiveView(View1);
+    }
+}
